@@ -38,7 +38,7 @@ License and Author
 
 Author:: Geoffrey Tran (<geoffrey.tran@gmail.com>)
 
-Copyright:: 2012, Geoffrey Tran
+Copyright:: 2012, Geoffrey Tran <http://geoffreytran.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
