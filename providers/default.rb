@@ -52,6 +52,7 @@ end
 
 action :update do
   deploy_to = new_resource.name
+  packages = new_resource.packages
 
   if !::File.directory?(deploy_to)
     raise "#{deploy_to} is not a directory"
@@ -61,7 +62,7 @@ action :update do
     Chef::Log.info("Could not find \"composer.phar\"in #{deploy_to}")
   else
     composer = Chef::ShellOut.new(
-      "./composer.phar --no-interaction update",
+      "composer --no-interaction update #{packages}",
       :env   => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
       :cwd   => deploy_to,
       :user  => node[:composer][:user],
