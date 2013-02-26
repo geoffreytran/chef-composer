@@ -18,10 +18,11 @@ action :deploy do
   else
     shell = Chef::ShellOut.new(
       "curl -s http://getcomposer.org/installer | php", 
-      :env => { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }, 
-      :cwd => deploy_to,
-      :user  => node[:composer][:user],
-      :group => node[:composer][:group]
+      :env     => { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }, 
+      :cwd     => deploy_to,
+      :user    => node[:composer][:user],
+      :group   => node[:composer][:group],
+      :timeout => 300
     )
     shell.run_command
   end
@@ -39,10 +40,11 @@ action :install do
   else
     composer = Chef::ShellOut.new(
       "./composer.phar --no-interaction install --optimize-autoloader",
-      :env   => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
-      :cwd   => deploy_to,
-      :user  => node[:composer][:user],
-      :group => node[:composer][:group]
+      :env     => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
+      :cwd     => deploy_to,
+      :user    => node[:composer][:user],
+      :group   => node[:composer][:group],
+      :timeout => 300
     )
     composer.run_command
     composer.error!
@@ -62,10 +64,11 @@ action :update do
   else
     composer = Chef::ShellOut.new(
       "./composer.phar --no-interaction update --optimize-autoloader",
-      :env   => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
-      :cwd   => deploy_to,
-      :user  => node[:composer][:user],
-      :group => node[:composer][:group]
+      :env     => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
+      :cwd     => deploy_to,
+      :user    => node[:composer][:user],
+      :group   => node[:composer][:group],
+      :timeout => 300
     )
     composer.run_command
     composer.error!
