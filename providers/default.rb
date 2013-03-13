@@ -22,7 +22,7 @@ action :deploy do
       :cwd     => deploy_to,
       :user    => node[:composer][:user],
       :group   => node[:composer][:group],
-      :timeout => 300
+      :timeout => 3600
     )
     shell.run_command
   end
@@ -39,12 +39,12 @@ action :install do
     Chef::Log.info("Could not find \"composer.phar\"in #{deploy_to}")
   else
     composer = Chef::ShellOut.new(
-      "./composer.phar --no-interaction install --optimize-autoloader",
+      "./composer.phar --no-interaction install --optimize-autoloader --prefer-dist",
       :env     => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
       :cwd     => deploy_to,
       :user    => node[:composer][:user],
       :group   => node[:composer][:group],
-      :timeout => 300
+      :timeout => 3600
     )
     composer.run_command
     composer.error!
@@ -68,7 +68,7 @@ action :update do
       :cwd     => deploy_to,
       :user    => node[:composer][:user],
       :group   => node[:composer][:group],
-      :timeout => 300
+      :timeout => 3600
     )
     composer.run_command
     composer.error!
