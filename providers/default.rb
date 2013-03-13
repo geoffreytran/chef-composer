@@ -39,7 +39,7 @@ action :install do
     Chef::Log.info("Could not find \"composer.phar\"in #{deploy_to}")
   else
     composer = Chef::ShellOut.new(
-      "./composer.phar --no-interaction install --optimize-autoloader --prefer-dist",
+      "./composer.phar --no-interaction install --optimize-autoloader",
       :env     => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
       :cwd     => deploy_to,
       :user    => node[:composer][:user],
