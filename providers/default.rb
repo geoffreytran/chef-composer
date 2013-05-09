@@ -16,7 +16,7 @@ action :deploy do
   if ::File.exists?("#{deploy_to}/composer.phar")
     Chef::Log.debug("The composer.phar is already in #{deploy_to} - skipping.")
   else
-    shell = Chef::ShellOut.new(
+    shell = Mixlib::ShellOut.new(
       "curl -s http://getcomposer.org/installer | php", 
       :env     => { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }, 
       :cwd     => deploy_to,
@@ -38,7 +38,7 @@ action :install do
   if !::File.exists?("#{deploy_to}/composer.phar")
     Chef::Log.info("Could not find \"composer.phar\"in #{deploy_to}")
   else
-    composer = Chef::ShellOut.new(
+    composer = Mixlib::ShellOut.new(
       "./composer.phar --no-interaction install --optimize-autoloader",
       :env     => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
       :cwd     => deploy_to,
