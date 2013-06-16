@@ -16,9 +16,17 @@ action :deploy do
   if ::File.exists?("#{deploy_to}/composer.phar")
     Chef::Log.debug("The composer.phar is already in #{deploy_to} - skipping.")
   else
+    env = { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }
+    
+    unless new_resource.composer_home.nil?
+      env = Chef::Mixin::DeepMerge.merge(env, {
+        'COMPOSER_HOME' => new_resource.composer_home
+      })
+    end
+    
     shell = Mixlib::ShellOut.new(
       "curl -s http://getcomposer.org/installer | php", 
-      :env     => { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }, 
+      :env     => env, 
       :cwd     => deploy_to,
       :user    => node[:composer][:user],
       :group   => node[:composer][:group],
@@ -38,9 +46,17 @@ action :install do
   if !::File.exists?("#{deploy_to}/composer.phar")
     Chef::Log.info("Could not find \"composer.phar\"in #{deploy_to}")
   else
+    env = { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }
+    
+    unless new_resource.composer_home.nil?
+      env = Chef::Mixin::DeepMerge.merge(env, {
+        'COMPOSER_HOME' => new_resource.composer_home
+      })
+    end
+    
     composer = Mixlib::ShellOut.new(
       "./composer.phar --no-interaction install --optimize-autoloader",
-      :env     => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
+      :env     => env,
       :cwd     => deploy_to,
       :user    => node[:composer][:user],
       :group   => node[:composer][:group],
@@ -62,9 +78,17 @@ action :update do
   if !::File.exists?("#{deploy_to}/composer.phar")
     Chef::Log.info("Could not find \"composer.phar\"in #{deploy_to}")
   else
+    env = { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }
+    
+    unless new_resource.composer_home.nil?
+      env = Chef::Mixin::DeepMerge.merge(env, {
+        'COMPOSER_HOME' => new_resource.composer_home
+      })
+    end
+    
     composer = Chef::ShellOut.new(
       "./composer.phar --no-interaction update --optimize-autoloader",
-      :env     => { 'PATH' => '/usr/bin:/usr/local/bin:/bin:/sbin' },
+      :env     => env,
       :cwd     => deploy_to,
       :user    => node[:composer][:user],
       :group   => node[:composer][:group],
