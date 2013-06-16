@@ -2,4 +2,4 @@ actions :deploy, :install
 
 # Where to deploy composer.phar
 attribute :deploy_to, :kind_of => String, :name_attribute => true
-attribute :composer_home, :kind_of => String, default => ""
+attribute :composer_home, :kind_of => String, :default => nil
