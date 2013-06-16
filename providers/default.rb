@@ -18,9 +18,9 @@ action :deploy do
   else
     env = { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }
     
-    unless new_resource.composer_home.nil?
+    unless new_resource.home.nil?
       env = Chef::Mixin::DeepMerge.merge(env, {
-        'COMPOSER_HOME' => new_resource.composer_home
+        'COMPOSER_HOME' => new_resource.home
       })
     end
     
@@ -48,9 +48,9 @@ action :install do
   else
     env = { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }
     
-    unless new_resource.composer_home.nil?
+    unless new_resource.home.nil?
       env = Chef::Mixin::DeepMerge.merge(env, {
-        'COMPOSER_HOME' => new_resource.composer_home
+        'COMPOSER_HOME' => new_resource.home
       })
     end
     
@@ -80,9 +80,9 @@ action :update do
   else
     env = { 'PATH' => '/usr/bin:/usr/local/bin:/bin' }
     
-    unless new_resource.composer_home.nil?
+    unless new_resource.home.nil?
       env = Chef::Mixin::DeepMerge.merge(env, {
-        'COMPOSER_HOME' => new_resource.composer_home
+        'COMPOSER_HOME' => new_resource.home
       })
     end
     
