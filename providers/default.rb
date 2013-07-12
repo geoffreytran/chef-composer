@@ -38,6 +38,7 @@ end
 
 action :install do
   deploy_to = new_resource.name
+  dev = new_resource.dev ? '--dev' : '--no-dev'
 
   if !::File.directory?(deploy_to)
     raise "#{deploy_to} is not a directory"
@@ -55,7 +56,7 @@ action :install do
     end
     
     composer = Mixlib::ShellOut.new(
-      "./composer.phar --no-interaction install --optimize-autoloader",
+      "./composer.phar --no-interaction install --optimize-autoloader #{dev}",
       :env     => env,
       :cwd     => deploy_to,
       :user    => node[:composer][:user],
@@ -70,6 +71,7 @@ end
 
 action :update do
   deploy_to = new_resource.name
+  dev = new_resource.dev ? '--dev' : '--no-dev'
 
   if !::File.directory?(deploy_to)
     raise "#{deploy_to} is not a directory"
@@ -87,7 +89,7 @@ action :update do
     end
     
     composer = Chef::ShellOut.new(
-      "./composer.phar --no-interaction update --optimize-autoloader",
+      "./composer.phar --no-interaction update --optimize-autoloader #{dev}",
       :env     => env,
       :cwd     => deploy_to,
       :user    => node[:composer][:user],
