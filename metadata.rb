@@ -1,3 +1,4 @@
+name		 "chef-composer"
 maintainer       "Geoffrey Tran"
 maintainer_email "geoffrey.tran@gmail.com"
 license          "Apache License, Version 2.0"
